@@ -18,7 +18,7 @@ def create_client() -> tuple[OpenAI, str]:
 
     api_key = os.getenv("DEEPSEEK_API_KEY")
     base_url = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
-    model = os.getenv("DEEPSEEK_MODEL", "deepseek-v4-pro")
+    model = os.getenv("DEEPSEEK_MODEL", "deepseek-v4-flash")
 
     if not api_key:
         raise ValueError("没有找到 DEEPSEEK_API_KEY，请检查 .env 文件。")
@@ -354,8 +354,10 @@ def run_agent(user_task: str) -> Dict[str, Any]:
         response_format={"type": "json_object"},
         stream=False,
     )
+    
+    final_content = final_response.choices[0].message.content
 
-    return json.loads(final_response.choices[0].message.content)
+    return json.loads(final_content)
 
 
 # =========================
