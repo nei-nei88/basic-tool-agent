@@ -26,6 +26,8 @@ def create_client() -> tuple[OpenAI, str]:
     client = OpenAI(
         api_key=api_key,
         base_url=base_url,
+        timeout=60,
+        max_retries=3,
     )
 
     return client, model
